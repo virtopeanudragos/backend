@@ -1,0 +1,455 @@
+openapi: 3.0.0
+info:
+  title: IBM Timisoara
+  description: Web-based application API for managing internship activities and grading
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+  /teams:
+    get:
+      summary: Get all teams
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+   
+    post:
+      summary: Create a new team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+                  
+  /teams/{teamId}/members:
+    put:
+      summary: Add a new member to a team
+      parameters:
+        - in: path
+          name: teamId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+       
+        '404':
+          description: Team not found
+        
+  /teams/{teamId}:
+   get:
+    summary: Get team details
+    parameters:
+      - in: path
+        name: teamId
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      '404':
+        description: Team not found
+
+   delete:
+    summary: Delete a team
+    parameters:
+      - in: path
+        name: teamId
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      '404':
+        description: Team not found
+
+ 
+  
+
+  /teams/{teamId}/members/{memberId}:
+    put:
+      summary: Remove a member from a team
+      parameters:
+        - in: path
+          name: teamId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: memberId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '404':
+          description: Team or member not found
+       
+  /student:
+    post:
+      summary: Add a new student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '405':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+    get:
+      summary: Get all students
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'            
+        
+  /student/{StudentID}:
+    get:
+      summary: Get student details
+      parameters:
+        - in: path
+          name: StudentID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          description: Student not found
+
+  /student/Leader:
+     get:
+      summary: Get all team leaders
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamLeader'
+
+  /student/{StudentID}/attendance:
+    post:
+      summary: Record student attendance
+      parameters:
+        - in: path
+          name: StudentID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceInput'
+
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+       
+        '404':
+          description: Student not found
+        
+  /student/{StudentID}/grades:
+    post:
+      summary: Record student grades
+      parameters:
+        - in: path
+          name: StudentID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradesInput'
+
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+       
+        '404':
+          description: Student not found
+        '405':
+          description: Invalid input
+          
+  /mentor:
+    get:
+      summary: Get all mentors
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mentor'
+
+    post:
+      summary: Add a new mentor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MentorInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mentor'
+      
+  /mentor/{MentorID}:
+   get:
+      summary: Get mentor details
+      parameters:
+        - in: path
+          name: MentorID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mentor'
+        '404':
+          description: Mentor not found
+          
+components:
+  schemas:
+    Team:
+      type: object
+      properties:
+        teamId:
+          type: integer
+        teamName:
+          type: string
+        activity:
+          type: string
+        teamLeaderId:
+          type: integer
+      required:
+        - teamName
+        - activity
+        - teamLeaderId
+
+    TeamInput:
+      type: object
+      properties:
+        teamName:
+          type: string
+        activity:
+          type: string
+        teamLeaderId:
+          type: integer
+      required:
+        - teamName
+        - activity
+        - teamLeaderId
+        
+    Student:
+      type: object
+      properties:
+        StudentID:
+          type: integer
+        StudentName:
+          type: string
+        TeamID:
+          type: integer
+        Email:
+          type: string
+        University:
+          type: string
+      required:
+        - StudentID
+        - StudentName
+        - Email
+        - University
+        
+    MemberInput:
+      type: object
+      properties:
+        MemberID:
+          type: integer
+        MemberName:
+          type: string
+      required:
+         - MemberID
+         - MemberName
+         
+    TeamLeader:
+      type: object
+      properties:
+        Leader:
+          type: boolean
+      required:
+        - Leader
+
+    AttendanceInput:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        activity:
+          type: string
+        attendanceStatus:
+          type: string
+      required:
+        - date
+        - attendanceStatus
+        - activity
+
+    Attendance:
+      type: object
+      properties:
+        attendanceId:
+          type: integer
+        studentId:
+          type: integer
+        activity:
+          type: string
+        date:
+          type: string
+          format: date
+        attendanceStatus:
+          type: string
+      required:
+        - attendanceId
+        - studentId
+        - date
+        - attendanceStatus
+        - activity
+    
+    Grade:
+      type: object
+      properties:
+        gradeId:
+          type: integer
+        teamId:
+          type: integer
+        studentId:
+          type: integer
+        mentorId:
+          type: integer
+        gradeValue:
+          type: number
+        gradeComment:
+          type: string
+      required:
+        - gradeId
+        - teamId
+        - mentorId
+        - gradeValue
+
+    GradesInput:
+      type: object
+      properties:
+        gradeValue:
+         type: integer
+        comment:
+         type: string
+        studentId:
+          type: integer
+      required:
+      - gradeValue
+        
+    Mentor:
+      type: object
+      properties:
+        mentorId:
+          type: integer
+        mentorName:
+          type: string
+      required:
+        - mentorName
+
+    
+    MentorInput:
+      type: object
+      properties:
+        mentorName:
+          type: string
+      required:
+        - mentorName
