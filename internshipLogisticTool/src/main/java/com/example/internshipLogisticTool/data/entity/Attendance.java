@@ -14,10 +14,17 @@ public class Attendance {
     private Long id;
 
     @NotBlank
-    private Long studentId;
-    @NotBlank
-    private Long sessionId;
-    @NotBlank
     private boolean attended;
+
+    //Relations ------------------------------------------------------------------------------
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "session_id", referencedColumnName = "id")
+    private Session session;
+
 
 }

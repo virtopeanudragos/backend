@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Student {
@@ -19,8 +21,19 @@ public class Student {
     private String email;
     private String university;
     @NotBlank
-    private Long teamId;
-    @NotBlank
     private boolean leader;
+
+
+    //Relations ------------------------------------------------------------------------------
+
+    @ManyToOne
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    private Team team;
+
+    @OneToMany(mappedBy = "student")
+    private List<Attendance> attendances;
+
+    @OneToMany(mappedBy = "student")
+    private List<Grade> grades;
 
 }
