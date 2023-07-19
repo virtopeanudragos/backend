@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Activity {
@@ -16,5 +18,13 @@ public class Activity {
     @NotBlank
     private String name;
     private String description;
+
+    //Relations ------------------------------------------------------------------------------
+
+    @ManyToMany(mappedBy = "activities")
+    private List<Team> teams;
+
+    @OneToMany(mappedBy = "activity")
+    private List<Session> sessions;
 
 }

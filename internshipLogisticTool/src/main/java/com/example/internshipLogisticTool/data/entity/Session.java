@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Session {
@@ -14,8 +16,18 @@ public class Session {
     private Long id;
 
     @NotBlank
-    private Long activityId;
-    @NotBlank
     private String date;
+
+    //Relations ------------------------------------------------------------------------------
+
+    @OneToMany(mappedBy = "session")
+    private List<Grade> grades;
+
+    @OneToMany(mappedBy = "session")
+    private List<Attendance> attendances;
+
+    @ManyToOne
+    @JoinColumn(name = "activity_id", referencedColumnName = "id")
+    private Activity activity;
 
 }

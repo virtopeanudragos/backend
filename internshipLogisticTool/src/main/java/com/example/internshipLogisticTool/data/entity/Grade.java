@@ -14,12 +14,21 @@ public class Grade {
     private Long id;
 
     @NotBlank
-    private Long sessionId;
-    private Long studentId;
-    @NotBlank
-    private Long teamId;
-    @NotBlank
     private float grade;
     private String comment;
+
+    //Relations ------------------------------------------------------------------------------
+
+    @ManyToOne
+    @JoinColumn(name = "session_id", referencedColumnName = "id")
+    private Session session;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    private Team team;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
 
 }
