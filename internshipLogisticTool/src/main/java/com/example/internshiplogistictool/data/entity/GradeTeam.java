@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Grade {
+public class GradeTeam {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "grade_id_generator")
@@ -24,8 +24,8 @@ public class Grade {
     private Session session;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private Student student;
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    private Team team;
 
     @ManyToOne
     @JoinColumn(name = "mentor_id", referencedColumnName = "id")

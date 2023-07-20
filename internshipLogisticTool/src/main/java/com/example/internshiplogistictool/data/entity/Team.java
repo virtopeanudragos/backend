@@ -18,7 +18,7 @@ public class Team {
     //Relations ------------------------------------------------------------------------------
 
     @OneToMany(mappedBy = "team")
-    private List<Grade> grades;
+    private List<GradeTeam> grades;
 
     @OneToMany(mappedBy = "team")
     private List<Student> students;

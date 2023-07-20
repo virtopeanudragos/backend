@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Mentor {
@@ -17,5 +19,11 @@ public class Mentor {
     private String name;
     @NotBlank
     private String email;
+
+    @OneToMany(mappedBy = "mentor")
+    private List<GradeTeam> gradeTeam;
+
+    @OneToMany(mappedBy = "mentor")
+    private List<Grade> grade;
 
 }
