@@ -1,9 +1,8 @@
-package com.example.internshipLogisticTool.data.entity;
+package com.example.internshiplogistictool.data.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collection;
 import java.util.List;
 
 @Data

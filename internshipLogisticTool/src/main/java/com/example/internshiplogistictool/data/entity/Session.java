@@ -1,4 +1,4 @@
-package com.example.internshipLogisticTool.data.entity;
+package com.example.internshiplogistictool.data.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

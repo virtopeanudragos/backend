@@ -1,6 +1,6 @@
-package com.example.internshipLogisticTool.repositories;
+package com.example.internshiplogistictool.data.repository;
 
-import com.example.internshipLogisticTool.data.entity.Mentor;
+import com.example.internshiplogistictool.data.entity.Mentor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
