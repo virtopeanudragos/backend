@@ -1,7 +1,7 @@
-package com.example.internshipLogisticTool.controllers;
+package com.example.internshiplogistictool.controllers;
 
-import com.example.internshipLogisticTool.data.entity.Team;
-import com.example.internshipLogisticTool.services.TeamService;
+import com.example.internshiplogistictool.data.entity.Team;
+import com.example.internshiplogistictool.data.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

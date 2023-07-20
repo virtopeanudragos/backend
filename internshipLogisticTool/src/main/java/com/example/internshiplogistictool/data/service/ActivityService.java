@@ -1,7 +1,7 @@
-package com.example.internshipLogisticTool.services;
+package com.example.internshiplogistictool.data.service;
 
-import com.example.internshipLogisticTool.data.entity.Activity;
-import com.example.internshipLogisticTool.repositories.ActivityRepository;
+import com.example.internshiplogistictool.data.entity.Activity;
+import com.example.internshiplogistictool.data.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
