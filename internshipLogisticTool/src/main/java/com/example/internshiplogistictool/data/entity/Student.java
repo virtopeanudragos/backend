@@ -1,7 +1,9 @@
 package com.example.internshiplogistictool.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.List;
@@ -20,12 +22,12 @@ public class Student {
     @NotBlank
     private String email;
     private String university;
-    @NotBlank
+    @NotNull
     private boolean leader;
 
 
     //Relations ------------------------------------------------------------------------------
-
+    @JsonIgnoreProperties({"grades", "students", "activities"})
     @ManyToOne
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
