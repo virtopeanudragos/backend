@@ -1,5 +1,6 @@
 package com.example.internshiplogistictool.data.service;
 
+import com.example.internshiplogistictool.data.entity.Student;
 import com.example.internshiplogistictool.data.entity.Team;
 import com.example.internshiplogistictool.data.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class TeamService {
 
     public void deleteTeam(Long id) {
         teamRepository.deleteById(id);
+    }
+
+    public void addMemberToTeam(Long id, Student student){
+        Team team = getTeamById(id);
+        List<Student> teamMembers = team.getStudents();
+        teamMembers.add(student);
+        team.setStudents(teamMembers);
+        teamRepository.save(team);
     }
 }
 

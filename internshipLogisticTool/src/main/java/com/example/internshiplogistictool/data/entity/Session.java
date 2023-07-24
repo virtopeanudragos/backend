@@ -21,6 +21,9 @@ public class Session {
     //Relations ------------------------------------------------------------------------------
 
     @OneToMany(mappedBy = "session")
+    private List<GradeTeam> gradesTeam;
+
+    @OneToMany(mappedBy = "session")
     private List<Grade> grades;
 
     @OneToMany(mappedBy = "session")

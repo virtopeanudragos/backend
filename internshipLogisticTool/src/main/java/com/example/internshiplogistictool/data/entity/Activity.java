@@ -1,5 +1,7 @@
 package com.example.internshiplogistictool.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -21,9 +23,11 @@ public class Activity {
 
     //Relations ------------------------------------------------------------------------------
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "activities")
     private List<Team> teams;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "activity")
     private List<Session> sessions;
 

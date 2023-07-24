@@ -1,5 +1,6 @@
 package com.example.internshiplogistictool.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,12 +18,15 @@ public class Team {
 
     //Relations ------------------------------------------------------------------------------
 
+    @JsonIgnoreProperties({"team", "id"})
     @OneToMany(mappedBy = "team")
     private List<GradeTeam> grades;
 
+    @JsonIgnoreProperties({"email", "university", "team", "attendances", "grades"})
     @OneToMany(mappedBy = "team")
     private List<Student> students;
 
+    @JsonIgnoreProperties({"teams", "session"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "team_activity",
