@@ -30,8 +30,8 @@ public class Team {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "team_activity",
-            joinColumns = @JoinColumn(name = "activity_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "activity_id", referencedColumnName = "id")
     )
     private List<Activity> activities;
 
