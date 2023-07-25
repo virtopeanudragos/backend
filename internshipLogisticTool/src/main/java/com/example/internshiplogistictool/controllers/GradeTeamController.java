@@ -1,7 +1,11 @@
 package com.example.internshiplogistictool.controllers;
 
 import com.example.internshiplogistictool.data.entity.GradeTeam;
+import com.example.internshiplogistictool.data.entity.Session;
+import com.example.internshiplogistictool.data.entity.Team;
 import com.example.internshiplogistictool.data.service.GradeTeamService;
+import com.example.internshiplogistictool.data.service.SessionService;
+import com.example.internshiplogistictool.data.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/gradesTeam")
 public class GradeTeamController {
+    private final TeamService teamService;
+    private final SessionService sessionService;
 
     private final GradeTeamService gradeTeamService;
 
     @Autowired
-    public GradeTeamController(GradeTeamService gradeTeamService) {
+    public GradeTeamController(TeamService teamService, SessionService sessionService, GradeTeamService gradeTeamService) {
+        this.teamService = teamService;
+        this.sessionService = sessionService;
         this.gradeTeamService = gradeTeamService;
     }
 
@@ -23,8 +31,14 @@ public class GradeTeamController {
         return gradeTeamService.getGradesByTeamAndSession(teamId, sessionId);
     }
 
-    @PostMapping
-    public GradeTeam createGradeTeam(@RequestBody GradeTeam gradeTeam) {
+    @PostMapping("/{teamId}/{sessionId}")
+    public GradeTeam createGradeTeam(@PathVariable Long teamId, @PathVariable Long sessionId, @RequestBody GradeTeam gradeTeam) {
+        Session session = sessionService.getSessionById(sessionId);
+        Team team = teamService.getTeamById(teamId);
+
+        gradeTeam.setTeam(team);
+        gradeTeam.setSession(session);
+
         return gradeTeamService.createGradeTeam(gradeTeam);
     }
 
