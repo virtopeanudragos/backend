@@ -20,7 +20,7 @@ public class GradeTeam {
 
     //Relations ------------------------------------------------------------------------------
 
-    @JsonIgnoreProperties({"gradesTeam", "grades", "attendances", "activity"})
+    @JsonIgnoreProperties({"id", "gradesTeam", "grades", "attendances", "activity"})
     @ManyToOne
     @JoinColumn(name = "session_id", referencedColumnName = "id")
     private Session session;
@@ -30,7 +30,7 @@ public class GradeTeam {
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
 
-    @JsonIgnoreProperties({"gradeTeam", "grade"})
+    @JsonIgnoreProperties({"gradeTeam", "grade", "email"})
     @ManyToOne
     @JoinColumn(name = "mentor_id", referencedColumnName = "id")
     private Mentor mentor;

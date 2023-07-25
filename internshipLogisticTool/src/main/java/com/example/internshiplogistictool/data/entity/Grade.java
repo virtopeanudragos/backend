@@ -3,6 +3,7 @@ package com.example.internshiplogistictool.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -14,22 +15,22 @@ public class Grade {
     @SequenceGenerator(name = "grade_id_generator", initialValue = 1000, allocationSize = 1)
     private Long id;
 
-    @NotBlank
+    @NotNull
     private float grade;
     private String comment;
 
     //Relations ------------------------------------------------------------------------------
-    @JsonIgnoreProperties({"grades","student","mentor","attendances", "activity"})
+    @JsonIgnoreProperties({"id", "grades", "gradesTeam","attendances", "activity"})
     @ManyToOne
     @JoinColumn(name = "session_id", referencedColumnName = "id")
     private Session session;
 
-    @JsonIgnoreProperties({"grades","student","mentor","attendances", "activity"})
+    @JsonIgnoreProperties({"email", "university", "leader", "team", "attendances", "grades"})
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
-    @JsonIgnoreProperties({"grades","student","mentor","attendances", "activity"})
+    @JsonIgnoreProperties({"email", "grade", "gradeTeam"})
     @ManyToOne
     @JoinColumn(name = "mentor_id", referencedColumnName = "id")
     private Mentor mentor;
