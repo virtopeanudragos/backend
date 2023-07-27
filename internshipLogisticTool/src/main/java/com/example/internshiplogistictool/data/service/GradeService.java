@@ -2,6 +2,7 @@ package com.example.internshiplogistictool.data.service;
 
 import com.example.internshiplogistictool.data.entity.Grade;
 import com.example.internshiplogistictool.data.repository.GradeRepository;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,12 @@ public class GradeService {
     }
 
     public List<Grade> getGradesByStudentAndSession(Long studentId, Long sessionId) {
-        return gradeRepository.findByStudentIdAndSessionId(studentId, sessionId);
+        List<Grade> grades = gradeRepository.findByStudentIdAndSessionId(studentId, sessionId);
+        if (grades != null && !grades.isEmpty()) {
+            return grades;
+        } else {
+            throw new CustomException("No grades found for Student ID: " + studentId + " and Session ID: " + sessionId);
+        }
     }
 
     public Grade createGrade(Grade grade) {

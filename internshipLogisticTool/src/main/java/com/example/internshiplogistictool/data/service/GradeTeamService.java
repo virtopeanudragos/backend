@@ -2,6 +2,7 @@ package com.example.internshiplogistictool.data.service;
 
 import com.example.internshiplogistictool.data.entity.GradeTeam;
 import com.example.internshiplogistictool.data.repository.GradeTeamRepository;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,12 @@ public class GradeTeamService {
     }
 
     public List<GradeTeam> getGradesByTeamAndSession(Long teamId, Long sessionId) {
-        return gradeTeamRepository.findByTeamIdAndSessionId(teamId, sessionId);
+        List<GradeTeam> grades = gradeTeamRepository.findByTeamIdAndSessionId(teamId, sessionId);
+        if (grades != null && !grades.isEmpty()) {
+            return grades;
+        } else {
+            throw new CustomException("No grades found for Team ID: " + teamId + " and Session ID: " + sessionId);
+        }
     }
 
     public GradeTeam createGradeTeam(GradeTeam gradeTeam) {
@@ -28,8 +34,6 @@ public class GradeTeamService {
     public GradeTeam updateGradeTeam(Long teamId, Long sessionId, GradeTeam gradeTeam) {
         GradeTeam existingGradeTeam = gradeTeamRepository.findById(gradeTeam.getId())
                 .orElseThrow(() -> new RuntimeException("GradeTeam not found with ID: " + gradeTeam.getId()));
-
-        // Set the updated properties
         existingGradeTeam.setGrade(gradeTeam.getGrade());
         existingGradeTeam.setComment(gradeTeam.getComment());
 

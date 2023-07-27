@@ -3,6 +3,7 @@ package com.example.internshiplogistictool.data.service;
 import com.example.internshiplogistictool.data.entity.Student;
 import com.example.internshiplogistictool.data.entity.Team;
 import com.example.internshiplogistictool.data.repository.TeamRepository;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class TeamService {
 
     public Team getTeamById(Long id) {
         return teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Team not found with id: " + id));
+                .orElseThrow(() -> new CustomException("Team not found with id: " + id));
     }
 
     public Team createTeam(Team team) {
