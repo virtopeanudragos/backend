@@ -31,15 +31,12 @@ public class GradeService {
         return gradeRepository.save(grade);
     }
 
-    public Grade updateGrade(Long studentId, Long sessionId, Grade grade) {
-        Grade existingGrade = gradeRepository.findByIdAndStudentId(grade.getId(), studentId);
-        if (existingGrade == null) {
-            throw new RuntimeException("Grade not found with ID: " + grade.getId() + " and Student ID: " + studentId);
-        }
-      
-        existingGrade.setGrade(grade.getGrade());
-        existingGrade.setComment(grade.getComment());
+    public Grade updateGrade(Grade grade) {
+        return gradeRepository.save(grade);
+    }
 
-        return gradeRepository.save(existingGrade);
+    public Grade getGradeById(Long id){
+        return gradeRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Grade not found"));
     }
 }

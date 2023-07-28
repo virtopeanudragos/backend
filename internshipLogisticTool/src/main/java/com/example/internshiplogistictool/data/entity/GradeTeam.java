@@ -36,4 +36,15 @@ public class GradeTeam {
     @JoinColumn(name = "mentor_id", referencedColumnName = "id")
     private Mentor mentor;
 
+
+    public GradeTeam(float grade, String comment, Session session, Team team, Mentor mentor) {
+        this.grade = grade;
+        this.comment = comment;
+        this.session = session;
+        this.team = team;
+        this.mentor = mentor;
+    }
+
+    public GradeTeam() {
+    }
 }

@@ -26,13 +26,13 @@ public class AttendanceController {
         this.attendanceService = attendanceService;
     }
 
-    @GetMapping("/{studentId}")
-    public List<Attendance> getStudentAttendances (@PathVariable Long studentId){
+    @GetMapping
+    public List<Attendance> getStudentAttendances (@RequestParam Long studentId){
         return studentService.getStudentById(studentId).getAttendances();
     }
 
-    @PostMapping("/{studentId}/{sessionId}")
-    public Attendance recordAttendance(@PathVariable Long studentId, @PathVariable Long sessionId, @RequestBody Attendance attendance){
+    @PostMapping
+    public Attendance recordAttendance(@RequestParam Long studentId, @RequestParam Long sessionId, @RequestBody Attendance attendance){
 
         Session session = sessionService.getSessionById(sessionId);
         Student student = studentService.getStudentById(studentId);
@@ -43,8 +43,8 @@ public class AttendanceController {
         return attendanceService.createAttendance(attendance);
     }
 
-    @PutMapping("/{studentId}/{sessionId}")
-    public Attendance updateAttendance(@PathVariable Long studentId, @PathVariable Long sessionId, @RequestBody Attendance attendance){
+    @PutMapping
+    public Attendance updateAttendance(@RequestParam Long studentId, @RequestParam Long sessionId, @RequestBody Attendance attendance){
 
         Session session = sessionService.getSessionById(sessionId);
         Student student = studentService.getStudentById(studentId);

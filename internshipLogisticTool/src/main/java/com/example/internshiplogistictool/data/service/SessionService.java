@@ -2,6 +2,7 @@ package com.example.internshiplogistictool.data.service;
 
 import com.example.internshiplogistictool.data.entity.Session;
 import com.example.internshiplogistictool.data.repository.SessionRepository;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class SessionService {
 
     public Session getSessionById(Long id){
         return sessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Session not found with id: " + id));
+                .orElseThrow(() -> new CustomException("Session not found with id: " + id));
     }
 
     public List<Session> getAllSessions(){

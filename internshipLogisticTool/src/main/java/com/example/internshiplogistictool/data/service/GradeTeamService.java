@@ -23,7 +23,7 @@ public class GradeTeamService {
         if (grades != null && !grades.isEmpty()) {
             return grades;
         } else {
-            throw new CustomException("No grades found for Team ID: " + teamId + " and Session ID: " + sessionId);
+            throw new CustomException("No grades found for Team and Session");
         }
     }
 
@@ -31,12 +31,12 @@ public class GradeTeamService {
         return gradeTeamRepository.save(gradeTeam);
     }
 
-    public GradeTeam updateGradeTeam(Long teamId, Long sessionId, GradeTeam gradeTeam) {
-        GradeTeam existingGradeTeam = gradeTeamRepository.findById(gradeTeam.getId())
-                .orElseThrow(() -> new RuntimeException("GradeTeam not found with ID: " + gradeTeam.getId()));
-        existingGradeTeam.setGrade(gradeTeam.getGrade());
-        existingGradeTeam.setComment(gradeTeam.getComment());
+    public GradeTeam updateGradeTeam(GradeTeam gradeTeam) {
+        return gradeTeamRepository.save(gradeTeam);
+    }
 
-        return gradeTeamRepository.save(existingGradeTeam);
+    public GradeTeam getGradeTeamById(Long id){
+        return gradeTeamRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Grade not found"));
     }
 }
