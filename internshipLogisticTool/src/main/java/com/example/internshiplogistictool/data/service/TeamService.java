@@ -25,7 +25,7 @@ public class TeamService {
 
     public Team getTeamById(Long id) {
         return teamRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Team not found with id: " + id));
+                .orElseThrow(() -> new CustomException("Team not found"));
     }
 
     public Team createTeam(Team team) {
@@ -34,14 +34,6 @@ public class TeamService {
 
     public void deleteTeam(Long id) {
         teamRepository.deleteById(id);
-    }
-
-    public void addMemberToTeam(Long id, Student student){
-        Team team = getTeamById(id);
-        List<Student> teamMembers = team.getStudents();
-        teamMembers.add(student);
-        team.setStudents(teamMembers);
-        teamRepository.save(team);
     }
 }
 

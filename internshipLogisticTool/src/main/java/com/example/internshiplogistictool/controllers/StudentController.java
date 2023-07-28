@@ -1,9 +1,11 @@
 package com.example.internshiplogistictool.controllers;
 
+import com.example.internshiplogistictool.data.dto.StudentDTO;
 import com.example.internshiplogistictool.data.entity.Student;
 import com.example.internshiplogistictool.data.entity.Team;
 import com.example.internshiplogistictool.data.service.StudentService;
 import com.example.internshiplogistictool.data.service.TeamService;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +37,31 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student){
-        return studentService.createStudent(student);
+    public ResponseEntity<Student> createStudentAndAddToTeam(@RequestBody StudentDTO studentDTO){
+        Student student = new Student(
+                studentDTO.getName(),
+                studentDTO.getEmail(),
+                studentDTO.getUniversity(),
+                studentDTO.isLeader()
+        );
+        if(studentDTO.getTeamId() != null)
+            student.setTeam(teamService.getTeamById(studentDTO.getTeamId()));
+
+        Student result = studentService.createStudent(student);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Student> addStudentToTeam(@RequestBody Student student, @PathVariable Long id){
-        Team team = teamService.getTeamById(id);
-        student.setTeam(team);
-        Student result = studentService.createStudent(student);
+    @PutMapping
+    public ResponseEntity<Student> updateStudentTeam(@RequestBody StudentDTO studentDTO){
+        Student student = studentService.getStudentById(studentDTO.getId());
+        if(studentDTO.getTeamId() != null)
+            if(student.getTeam() != null)
+                throw new CustomException("Student is already in a team");
+            else
+                student.setTeam(teamService.getTeamById(studentDTO.getTeamId()));
+        else
+            student.setTeam(null);
+        Student result = studentService.updateStudent(student);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

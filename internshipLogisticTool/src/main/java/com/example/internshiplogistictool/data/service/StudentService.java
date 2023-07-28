@@ -1,7 +1,9 @@
 package com.example.internshiplogistictool.data.service;
 
 import com.example.internshiplogistictool.data.entity.Student;
+import com.example.internshiplogistictool.data.entity.Team;
 import com.example.internshiplogistictool.data.repository.StudentRepository;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +24,16 @@ public class StudentService {
 
     public Student getStudentById(Long id){
         return studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+                .orElseThrow(() -> new CustomException("Student not found with id: " + id));
     }
 
     public Student createStudent(Student student){
         return studentRepository.save(student);
     }
 
+    public Student updateStudent(Student student){
+        return studentRepository.save(student);
+    }
 
 
 }

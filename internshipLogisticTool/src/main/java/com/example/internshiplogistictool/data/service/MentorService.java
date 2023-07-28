@@ -2,6 +2,7 @@ package com.example.internshiplogistictool.data.service;
 
 import com.example.internshiplogistictool.data.entity.Mentor;
 import com.example.internshiplogistictool.data.repository.MentorRepository;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class MentorService {
 
     public Mentor getMentorById(Long id) {
         return mentorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mentor not found with id: " + id));
+                .orElseThrow(() -> new CustomException("Mentor not found"));
     }
 
     public Mentor createMentor(Mentor mentor) {

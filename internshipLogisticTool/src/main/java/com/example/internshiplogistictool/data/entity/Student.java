@@ -38,4 +38,21 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private List<Grade> grades;
 
+    public Student() {
+    }
+
+    public Student(String name, String email, String university, boolean leader, Team team) {
+        this.name = name;
+        this.email = email;
+        this.university = university;
+        this.leader = leader;
+        this.team = team;
+    }
+
+    public Student(String name, String email, String university, boolean leader) {
+        this.name = name;
+        this.email = email;
+        this.university = university;
+        this.leader = leader;
+    }
 }

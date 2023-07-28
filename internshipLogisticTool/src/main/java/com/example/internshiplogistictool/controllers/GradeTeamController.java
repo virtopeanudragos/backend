@@ -1,9 +1,9 @@
 package com.example.internshiplogistictool.controllers;
 
-import com.example.internshiplogistictool.data.entity.GradeTeam;
-import com.example.internshiplogistictool.data.entity.Session;
-import com.example.internshiplogistictool.data.entity.Team;
+import com.example.internshiplogistictool.data.dto.GradeDTO;
+import com.example.internshiplogistictool.data.entity.*;
 import com.example.internshiplogistictool.data.service.GradeTeamService;
+import com.example.internshiplogistictool.data.service.MentorService;
 import com.example.internshiplogistictool.data.service.SessionService;
 import com.example.internshiplogistictool.data.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,34 +16,47 @@ import java.util.List;
 public class GradeTeamController {
     private final TeamService teamService;
     private final SessionService sessionService;
-
+    private final MentorService mentorService;
     private final GradeTeamService gradeTeamService;
 
     @Autowired
-    public GradeTeamController(TeamService teamService, SessionService sessionService, GradeTeamService gradeTeamService) {
+    public GradeTeamController(TeamService teamService, SessionService sessionService, MentorService mentorService, GradeTeamService gradeTeamService) {
         this.teamService = teamService;
         this.sessionService = sessionService;
+        this.mentorService = mentorService;
         this.gradeTeamService = gradeTeamService;
     }
 
-    @GetMapping("/{teamId}/{sessionId}")
-    public List<GradeTeam> getGradesByTeamAndSession(@PathVariable Long teamId, @PathVariable Long sessionId) {
+    @GetMapping
+    public List<GradeTeam> getGradesByTeamAndSession(@RequestParam Long teamId, @RequestParam Long sessionId) {
         return gradeTeamService.getGradesByTeamAndSession(teamId, sessionId);
     }
 
-    @PostMapping("/{teamId}/{sessionId}")
-    public GradeTeam createGradeTeam(@PathVariable Long teamId, @PathVariable Long sessionId, @RequestBody GradeTeam gradeTeam) {
+    @PostMapping
+    public GradeTeam createGradeTeam(@RequestParam Long teamId, @RequestParam Long sessionId, @RequestBody GradeDTO gradeDTO) {
         Session session = sessionService.getSessionById(sessionId);
         Team team = teamService.getTeamById(teamId);
+        Mentor mentor = mentorService.getMentorById(gradeDTO.getMentorId());
 
-        gradeTeam.setTeam(team);
-        gradeTeam.setSession(session);
+        GradeTeam gradeTeam = new GradeTeam(
+                gradeDTO.getGrade(),
+                gradeDTO.getComment(),
+                session,
+                team,
+                mentor
+        );
 
         return gradeTeamService.createGradeTeam(gradeTeam);
     }
 
-    @PutMapping("/{teamId}/{sessionId}")
-    public GradeTeam updateGradeTeam(@PathVariable Long teamId, @PathVariable Long sessionId, @RequestBody GradeTeam gradeTeam) {
-        return gradeTeamService.updateGradeTeam(teamId, sessionId, gradeTeam);
+    @PutMapping
+    public GradeTeam updateGradeTeam(@RequestBody GradeDTO gradeDTO) {
+        GradeTeam gradeTeam = gradeTeamService.getGradeTeamById(gradeDTO.getId());
+        if(gradeDTO.getGrade() != 0.0f)
+            gradeTeam.setGrade(gradeDTO.getGrade());
+        if(gradeDTO.getComment() != null)
+            gradeTeam.setComment(gradeDTO.getComment());
+
+        return gradeTeamService.updateGradeTeam(gradeTeam);
     }
 }
