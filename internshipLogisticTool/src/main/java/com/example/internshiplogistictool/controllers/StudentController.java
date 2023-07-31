@@ -2,7 +2,6 @@ package com.example.internshiplogistictool.controllers;
 
 import com.example.internshiplogistictool.data.dto.StudentDTO;
 import com.example.internshiplogistictool.data.entity.Student;
-import com.example.internshiplogistictool.data.entity.Team;
 import com.example.internshiplogistictool.data.service.StudentService;
 import com.example.internshiplogistictool.data.service.TeamService;
 import com.example.internshiplogistictool.exceptions.CustomException;
