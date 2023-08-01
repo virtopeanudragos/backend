@@ -34,7 +34,7 @@ public class Session {
     @OneToMany(mappedBy = "session")
     private List<Attendance> attendances;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"description", "teams", "session"})
     @ManyToOne
     @JoinColumn(name = "activity_id", referencedColumnName = "id")
     private Activity activity;

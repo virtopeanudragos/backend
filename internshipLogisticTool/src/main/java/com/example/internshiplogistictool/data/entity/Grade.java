@@ -20,7 +20,7 @@ public class Grade {
     private String comment;
 
     //Relations ------------------------------------------------------------------------------
-    @JsonIgnoreProperties({"id", "grades", "gradesTeam","attendances", "activity"})
+    @JsonIgnoreProperties({"id", "grades", "gradesTeam","attendances"})
     @ManyToOne
     @JoinColumn(name = "session_id", referencedColumnName = "id")
     private Session session;
