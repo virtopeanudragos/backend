@@ -2,6 +2,7 @@ package com.example.internshiplogistictool.data.service;
 
 import com.example.internshiplogistictool.data.entity.Activity;
 import com.example.internshiplogistictool.data.repository.ActivityRepository;
+import com.example.internshiplogistictool.exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,10 @@ public class ActivityService {
 
     public Activity createActivity(Activity activity) {
         return activityRepository.save(activity);
+    }
+
+    public void deleteActivity(Long id){
+        activityRepository.deleteById(id);
     }
 }
 
