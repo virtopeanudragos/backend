@@ -106,7 +106,24 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Student'            
-        
+    put:
+      summary: Add a new member to a team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+       
+        '404':
+          description: Team not found    
   /student/{StudentID}:
     get:
       summary: Get student details
@@ -126,41 +143,11 @@ paths:
         '404':
           description: Student not found
   
-  /student/{teamId}:
-   put:
-      summary: Add a new member to a team
-      parameters:
-        - in: path
-          name: teamId
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MemberInput'
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-       
-        '404':
-          description: Team not found
+   
   
-  /attendance/{StudentID}:
+  /attendance:
     post:
       summary: Record student attendance
-      parameters:
-        - in: path
-          name: StudentID
-          required: true
-          schema:
-            type: integer
       requestBody:
         required: true
         content:
@@ -181,12 +168,6 @@ paths:
           
     get:
       summary: Get student attendance
-      parameters:
-        - in: path
-          name: StudentID
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           description: Successful operation
@@ -199,12 +180,6 @@ paths:
     
     put:
       summary: Edit student attendance
-      parameters:
-        - in: path
-          name: StudentID
-          required: true
-          schema:
-            type: integer
       requestBody:
         required: true
         content:
@@ -222,15 +197,9 @@ paths:
         '404':
           description: Team not found
     
-  /grades/{StudentID}:
+  /grades:
     post:
       summary: Record student grades
-      parameters:
-        - in: path
-          name: StudentID
-          required: true
-          schema:
-            type: integer
       requestBody:
         required: true
         content:
@@ -253,12 +222,6 @@ paths:
     
     get:
       summary: Get student grades
-      parameters:
-        - in: path
-          name: StudentID
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           description: Successful operation
@@ -271,12 +234,6 @@ paths:
     
     put:
       summary: Edit student grades
-      parameters:
-        - in: path
-          name: StudentID
-          required: true
-          schema:
-            type: integer
       requestBody:
         required: true
         content:
@@ -342,7 +299,7 @@ paths:
         '404':
           description: Mentor not found
   
-  /sesion:
+  /session:
     post:
       summary: Add a new sesion
       requestBody:
@@ -376,6 +333,60 @@ paths:
                 items:
                   $ref: '#/components/schemas/Sesion'   
                   
+  /gradesTeam:
+    post:
+      summary: Record team grades
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeTeamInput'
+
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeTeam'
+       
+        '404':
+          description: Student not found
+        '405':
+          description: Invalid input
+    
+    get:
+      summary: Get team grades
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeTeam'
+        '404':
+          description: Student not found
+    
+    put:
+      summary: Edit team grades
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeTeamInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeTeam'
+       
+        '404':
+          description: Team not found
+          
   /sesion/{sesionID}:
    get:
     summary: Get sesion details
@@ -445,7 +456,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Activity'         
+                  $ref: '#/components/schemas/Activity'  
+                  
+                
+      
 components:
   schemas:
     Team:
@@ -614,4 +628,28 @@ components:
           type: string
       required:
         - name
-
+        
+    GradeTeamInput:
+      type: object
+      properties:
+        gradeValue:
+         type: integer
+        comment:
+         type: string
+        TeamId:
+          type: integer
+      required:
+      - gradeValue
+    
+    GradeTeam:
+      type: object
+      properties:
+        gradeValue:
+          type: integer
+        comment:
+          type: string
+        TeamId:
+          type: integer
+      required:
+      - gradeValue
+      - TeamID
